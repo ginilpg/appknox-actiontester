@@ -15,9 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Remove old Appknox versions
-      run: sudo rm -rf /opt/hostedtoolcache/appknox
-
     - name: Appknox Scan
       id: appknox_scan
       uses: appknox/appknox-github-action@1.1.2
@@ -27,7 +24,6 @@ jobs:
         appknox_access_token: ${{secrets.APPKNOX_ACCESS_TOKEN}}
         file_path: apk-binary-code/sample-app.apk
         risk_threshold: HIGH
-        sarif: Enable
         
     - name: Upload SARIF Report
       if: always()
