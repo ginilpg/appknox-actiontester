@@ -1,0 +1,37 @@
+name: Build and Scan APK
+on:
+  push:
+    branches:
+      - main
+permissions:
+  security-events: write
+  contents: read
+  actions: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Remove old Appknox versions
+      run: sudo rm -rf /opt/hostedtoolcache/appknox
+
+    - name: Appknox Scan
+      id: appknox_scan
+      uses: appknox/appknox-github-action@1.1.1
+      env:
+        ACTIONS_RUNNER_DEBUG: true
+      with:
+        appknox_access_token: ${{secrets.APPKNOX_ACCESS_TOKEN}}
+        file_path: apk-binary-code/sample-app.apk
+        risk_threshold: HIGH
+        sarif: Enable
+        
+    - name: Upload SARIF Report
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: sarif-report
+        path: report.sarif
