@@ -26,6 +26,7 @@ jobs:
         file_path: apk-binary-code/sample-app.apk
         risk_threshold: HIGH
         sarif: Enable
+        cache: 'false' 
 
     - name: Upload SARIF Report
       if: always()
