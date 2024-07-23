@@ -18,7 +18,7 @@ jobs:
 
     - name: Appknox Scan
       id: appknox_scan
-      uses: appknox/appknox-github-action@535510dc34c81b2b7266fefbdd05eadeacd467ed
+      uses: appknox/appknox-github-action@1.1.1
       env:
         ACTIONS_RUNNER_DEBUG: true
       with:
